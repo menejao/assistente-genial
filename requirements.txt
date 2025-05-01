@@ -1,0 +1,8 @@
+streamlit
+python-dotenv
+langchain
+langchain-community
+openai
+fpdf
+python-docx
+sqlalchemy

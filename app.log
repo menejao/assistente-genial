@@ -1,0 +1,1500 @@
+2025-04-30 17:46:12,666 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 17:52:22,674 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 17:59:27,741 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 18:00:28,823 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 246, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 166, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 18:05:57,319 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 273, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 222, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 18:08:52,267 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 18:09:35,722 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 273, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 222, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 18:18:35,529 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 269, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 218, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 18:18:39,723 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 269, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 218, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 18:19:39,306 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 18:19:54,419 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 269, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 218, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 18:58:44,657 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 281, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 230, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 19:02:49,938 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 281, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 230, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 19:02:51,178 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 281, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 230, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 19:05:01,553 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 292, in main
+    texto_analise = extrair_texto(uploaded_file) if uploaded_file else texto_manual
+                    ^^^^^^^^^^^^^
+NameError: name 'extrair_texto' is not defined
+2025-04-30 19:05:06,911 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 292, in main
+    texto_analise = extrair_texto(uploaded_file) if uploaded_file else texto_manual
+                    ^^^^^^^^^^^^^
+NameError: name 'extrair_texto' is not defined
+2025-04-30 19:19:25,486 - ERROR - Erro no processamento:
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 279, in main
+    resultado = gerar_analise_ia(llm, texto_analise)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 228, in gerar_analise_ia
+    resultado = (prompt | llm).invoke({"escopo": texto})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 19:36:40,749 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:47:55,264 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:48:19,136 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:50:35,975 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:50:54,029 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:50:54,912 - ERROR - Erro ao gerar PDF: Character "\U0001f4cc" at index 1 in text is outside the range of characters supported by the font used: "helvetica". Please consider using a Unicode font.
+2025-04-30 19:53:36,705 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:53:54,081 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 19:53:54,897 - ERROR - Erro ao gerar PDF: TTF Font file not found: DejaVuSans.ttf
+2025-04-30 19:56:16,911 - INFO - Fonte DejaVu instalada com sucesso
+2025-04-30 20:02:35,812 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:03:03,509 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:03:04,400 - ERROR - Erro durante análise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 20:08:04,889 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:08:19,551 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:08:20,363 - INFO - Texto extraído (primeiros 100 chars): 'Objetivos:\nCadastrar um Contrato\nVisualizar o cadastro de um Contrato.\nEditar o cadastro de um Contr'
+2025-04-30 20:08:20,366 - ERROR - Erro durante análise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 361, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})  # Limita o tamanho
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 20:09:24,122 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:09:43,693 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:09:44,636 - INFO - Texto extraído (primeiros 100 chars): 'Objetivos:\nCadastrar um Contrato\nVisualizar o cadastro de um Contrato.\nEditar o cadastro de um Contr'
+2025-04-30 20:09:44,711 - ERROR - Erro durante análise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 361, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})  # Limita o tamanho
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 20:14:59,908 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:15:17,892 - WARNING - WARNING! extra_headers is not default parameter.
+                    extra_headers was transferred to model_kwargs.
+                    Please confirm that extra_headers is what you intended.
+2025-04-30 20:15:18,709 - INFO - Texto extraído (amostra): 'Objetivos:\nCadastrar um Contrato\nVisualizar o cadastro de um Contrato.\nEditar o cadastro de um Contrato.\nLocalizacao:\n Task 35304\nResponsavel: Joao Vitor Costa\nLinks auxiliares\nDicionario de campos: T'
+2025-04-30 20:15:18,711 - ERROR - Erro durante análise: Completions.create() got an unexpected keyword argument 'encoding'
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 335, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+TypeError: Completions.create() got an unexpected keyword argument 'encoding'
+2025-04-30 20:17:47,564 - WARNING - WARNING! headers is not default parameter.
+                    headers was transferred to model_kwargs.
+                    Please confirm that headers is what you intended.
+2025-04-30 20:18:04,572 - WARNING - WARNING! headers is not default parameter.
+                    headers was transferred to model_kwargs.
+                    Please confirm that headers is what you intended.
+2025-04-30 20:18:05,385 - INFO - Texto extraído (amostra): 'Objetivos:\nCadastrar um Contrato\nVisualizar o cadastro de um Contrato.\nEditar o cadastro de um Contrato.\nLocalizacao:\n Task 35304\nResponsavel: Joao Vitor Costa\nLinks auxiliares\nDicionario de campos: T'
+2025-04-30 20:18:05,387 - ERROR - Erro durante análise: Completions.create() got an unexpected keyword argument 'headers'
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 334, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+TypeError: Completions.create() got an unexpected keyword argument 'headers'
+2025-04-30 20:21:44,533 - ERROR - Erro na inicialização: OPENROUTER_API_KEY não encontrada no arquivo .env
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 295, in main
+    llm = inicializar_ia()
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 205, in inicializar_ia
+    raise ValueError("OPENROUTER_API_KEY não encontrada no arquivo .env")
+ValueError: OPENROUTER_API_KEY não encontrada no arquivo .env
+2025-04-30 21:32:21,736 - ERROR - Erro na inicialização: OPENROUTER_API_KEY não encontrada no arquivo .env
+Traceback (most recent call last):
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 295, in main
+    llm = inicializar_ia()
+  File "C:\Users\joão.benedito\Downloads\assistente_escopo_ia\app.py", line 205, in inicializar_ia
+    raise ValueError("OPENROUTER_API_KEY não encontrada no arquivo .env")
+ValueError: OPENROUTER_API_KEY não encontrada no arquivo .env
+2025-04-30 21:33:55,206 - ERROR - Erro na inicializaÃ§Ã£o: OPENROUTER_API_KEY nÃ£o encontrada no arquivo .env
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 295, in main
+    llm = inicializar_ia()
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 205, in inicializar_ia
+    raise ValueError("OPENROUTER_API_KEY nÃ£o encontrada no arquivo .env")
+ValueError: OPENROUTER_API_KEY nÃ£o encontrada no arquivo .env
+2025-04-30 21:50:17,257 - INFO - Chave API encontrada na variÃ¡vel: OPENAI_API_KEY
+2025-04-30 21:50:17,266 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 21:50:17,267 - WARNING - WARNING! headers is not default parameter.
+                    headers was transferred to model_kwargs.
+                    Please confirm that headers is what you intended.
+2025-04-30 21:50:26,197 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 21:50:53,712 - INFO - Chave API encontrada na variÃ¡vel: OPENAI_API_KEY
+2025-04-30 21:50:53,723 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 21:50:53,724 - WARNING - WARNING! headers is not default parameter.
+                    headers was transferred to model_kwargs.
+                    Please confirm that headers is what you intended.
+2025-04-30 21:50:58,410 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 21:50:58,628 - ERROR - Erro na anÃ¡lise: Completions.create() got an unexpected keyword argument 'headers'
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 361, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+TypeError: Completions.create() got an unexpected keyword argument 'headers'
+2025-04-30 21:58:58,570 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 21:58:58,581 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 21:59:03,196 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 21:59:22,810 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 21:59:22,819 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 21:59:27,503 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 21:59:27,632 - ERROR - Erro na anÃ¡lise: Completions.create() got an unexpected keyword argument 'headers'
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 357, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+TypeError: Completions.create() got an unexpected keyword argument 'headers'
+2025-04-30 22:03:21,434 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:03:21,436 - ERROR - Erro fatal na aplicaÃ§Ã£o: name 'inicializar_banco' is not defined
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 174, in main
+    engine, Session = inicializar_banco()
+                      ^^^^^^^^^^^^^^^^^
+NameError: name 'inicializar_banco' is not defined. Did you mean: 'inicializar_ia'?
+2025-04-30 22:11:44,357 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:11:44,369 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:11:48,926 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:12:12,556 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:12:12,568 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:12:17,138 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:12:17,435 - ERROR - Erro na anÃ¡lise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 354, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 22:37:33,659 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:37:33,674 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:37:38,418 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:38:02,541 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:38:02,550 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:38:07,292 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:38:07,421 - ERROR - Erro na anÃ¡lise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 388, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 22:44:19,188 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:44:19,197 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:44:23,823 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:44:45,267 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:44:45,276 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:44:49,805 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:44:49,937 - ERROR - Erro na anÃ¡lise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 397, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 22:57:06,501 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:57:09,181 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:57:17,344 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:57:44,425 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 22:57:44,442 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 22:57:49,192 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 22:57:49,553 - ERROR - Erro na anÃ¡lise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 395, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+2025-04-30 23:01:01,697 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 23:01:01,727 - ERROR - Erro fatal na aplicaÃ§Ã£o: name 'inicializar_banco' is not defined
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 284, in main
+    engine, Session = inicializar_banco()
+                      ^^^^^^^^^^^^^^^^^
+NameError: name 'inicializar_banco' is not defined. Did you mean: 'inicializar_ia'?
+2025-04-30 23:07:39,165 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 23:07:39,735 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 23:07:41,667 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 23:08:04,078 - INFO - Usando chave API da variÃ¡vel: OPENAI_API_KEY
+2025-04-30 23:08:04,083 - INFO - Banco de dados inicializado com sucesso
+2025-04-30 23:08:05,283 - INFO - Modelo de IA inicializado com sucesso
+2025-04-30 23:08:05,447 - ERROR - Erro na anÃ¡lise: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
+Traceback (most recent call last):
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\app.py", line 401, in main
+    resultado_ia = chain.invoke({"texto": texto_analise[:15000]})
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\runnables\base.py", line 3034, in invoke
+    input = context.run(step.invoke, input, config)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 369, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 946, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 765, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_core\language_models\chat_models.py", line 1011, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 476, in _generate
+    response = self.completion_with_retry(
+        messages=message_dicts, run_manager=run_manager, **params
+    )
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\langchain_community\chat_models\openai.py", line 387, in completion_with_retry
+    return self.client.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_utils\_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 925, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<43 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 1239, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 958, in request
+    request = self._build_request(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 495, in _build_request
+    headers = self._build_headers(options, retries_taken=retries_taken)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\openai\_base_client.py", line 439, in _build_headers
+    headers = httpx.Headers(headers_dict)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 156, in __init__
+    bytes_value = _normalize_header_value(v, encoding)
+  File "C:\Users\joÃ£o.benedito\Downloads\assistente_escopo_ia\venv\Lib\site-packages\httpx\_models.py", line 82, in _normalize_header_value
+    return value.encode(encoding or "ascii")
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe9' in position 12: ordinal not in range(128)
