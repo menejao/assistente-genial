@@ -14,7 +14,6 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 
-
 # =============================================
 # FOLHA DE ESTILO (CSS EXTERNO)
 # =============================================
@@ -22,7 +21,6 @@ def carregar_estilos():
     with open("style.css", "r", encoding="utf-8") as f:
         css = f.read()
         st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
-
 
 # =============================================
 # CONFIGURAÇÃO INICIAL
@@ -36,7 +34,6 @@ def configurar_pagina():
     )
     carregar_estilos()
 
-
 # =============================================
 # MODELO DE BANCO DE DADOS
 # =============================================
@@ -45,43 +42,32 @@ Base = declarative_base()
 class Analise(Base):
     __tablename__ = 'analises'
     id = Column(Integer, primary_key=True)
-    email = Column(String(255))
+    nome = Column(String(255))
     texto_original = Column(Text)
     resultado_ia = Column(Text)
     metricas = Column(Text)
     data_hora = Column(DateTime, default=datetime.now)
 
-
 # =============================================
 # CONFIGURAÇÕES
 # =============================================
 def configurar_banco_dados():
+    if os.path.exists("analises.db"):
+        os.remove("analises.db")
     engine = create_engine('sqlite:///analises.db')
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
-    inspector = inspect(engine)
-
-    if 'analises' not in inspector.get_table_names():
-        Base.metadata.create_all(engine)
-    else:
-        colunas = [col['name'] for col in inspector.get_columns('analises')]
-        if 'metricas' not in colunas:
-            with engine.connect() as conn:
-                conn.execute(text('ALTER TABLE analises ADD COLUMN metricas TEXT'))
-
     return engine, Session
 
-
 def configurar_ia():
-    def configurar_ia():
     load_dotenv()
-    from langchain.llms import HuggingFaceHub
-
-    return HuggingFaceHub(
-        repo_id="mistralai/Mistral-7B-Instruct-v0.1",  # ou outro modelo compatível
-        model_kwargs={"temperature": 0.3},
-        huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_KEY")
+    return ChatOpenAI(
+        model_name="mistralai/mistral-7b-instruct",
+        temperature=0.3,
+        max_tokens=1024,
+        openai_api_base="https://openrouter.ai/api/v1",
+        openai_api_key=os.getenv("OPENROUTER_API_KEY")
     )
-
 
 # =============================================
 # PROMPT DE ANÁLISE
@@ -100,27 +86,27 @@ Você é um engenheiro experiente analisando documentos técnicos com profundida
 ## 2. AVALIAÇÃO POR CRITÉRIOS
 
 ### Clareza (x/5)
-✅ Pontos fortes
+👌 Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Viabilidade (x/5)
-✅ Pontos fortes
+👌 Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Organização e Coerência (x/5)
-✅ Pontos fortes
+👌 Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Impacto Ambiental e Societal (x/5)
-✅ Pontos fortes
+👌 Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Riscos e Desafios (x/5)
-✅ Pontos fortes
+👌 Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
@@ -138,7 +124,6 @@ Você é um engenheiro experiente analisando documentos técnicos com profundida
 Texto: {escopo}
 """)
 
-
 # =============================================
 # GERAÇÃO DE PDF COM FORMATO OFICIAL
 # =============================================
@@ -151,7 +136,6 @@ def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
         topMargin=72,
         bottomMargin=72
     )
-
     styles = getSampleStyleSheet()
 
     title_style = ParagraphStyle(
@@ -195,7 +179,6 @@ def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
     doc.build(content)
     return "relatorio_oficial.pdf"
 
-
 # =============================================
 # INTERFACE DO USUÁRIO
 # =============================================
@@ -206,7 +189,11 @@ def mostrar_analise(resultado):
     with cols[1]: st.metric("Viabilidade", "3.8/5", "-0.2")
     with cols[2]: st.metric("Organização", "4.5/5", "+1.1")
     with cols[3]: st.metric("Riscos", "2.9/5", "-0.5")
-    st.markdown(resultado['analise_completa'])
+    
+    st.markdown(
+        f"<div class='resultado'>{resultado['analise_completa']}</div>",
+        unsafe_allow_html=True
+    )
 
 
 def main():
@@ -228,15 +215,14 @@ def main():
             with col1:
                 arquivo = st.file_uploader("Envie um documento (.docx)", type=["docx"])
             with col2:
-                nome_empresa = st.text_input("Nome da Empresa", placeholder="Ex: InovaTech")
+                nome = st.text_input("Seu nome para salvar no histórico", placeholder="Ex: João Silva")
 
             texto = st.text_area("Ou cole o conteúdo diretamente:", height=250)
-            email = st.text_input("E-mail para salvar no histórico", placeholder="exemplo@email.com")
 
             executar = st.form_submit_button("Executar Análise", type="primary")
 
         if executar:
-            if not (arquivo or texto.strip()) or not email.strip():
+            if not (arquivo or texto.strip()) or not nome.strip():
                 st.error("Por favor, preencha todos os campos obrigatórios.")
             else:
                 with st.spinner("Executando análise..."):
@@ -245,40 +231,40 @@ def main():
                             doc = Document(arquivo)
                             texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
 
-                        prompt = criar_prompt_analise().format_messages(escopo=texto)
-                        resposta = ia(prompt)
-                        conteudo_final = resposta.content if hasattr(resposta, "content") else str(resposta)
+                        prompt_template = criar_prompt_analise()
+                        prompt_str = prompt_template.format(escopo=texto)
+                        conteudo_final = ia.invoke(prompt_str)
 
                         resultado = {
-                            'analise_completa': conteudo_final,
+                            'analise_completa': conteudo_final.content,
                             'metricas': {'clareza': 4.2, 'viabilidade': 3.8}
                         }
 
                         with Sessao() as sessao:
                             sessao.add(Analise(
-                                email=email,
+                                nome=nome,
                                 texto_original=texto,
-                                resultado_ia=conteudo_final,
+                                resultado_ia=resultado['analise_completa'],
                                 metricas=json.dumps(resultado['metricas'])
                             ))
                             sessao.commit()
 
                         mostrar_analise(resultado)
 
-                        pdf_path = gerar_pdf_com_layout_oficial(conteudo_final)
+                        pdf_path = gerar_pdf_com_layout_oficial(resultado['analise_completa'])
                         with open(pdf_path, "rb") as f:
-                            st.download_button("📥 Baixar PDF", f, file_name="analise_tecnica.pdf")
+                            st.download_button("📅 Baixar PDF", f, file_name="analise_tecnica.pdf")
 
                     except Exception as e:
                         st.error(f"Erro na análise: {str(e)}")
 
     with aba_historico:
-        email_hist = st.text_input("Digite seu e-mail para visualizar o histórico")
-        if email_hist:
+        nome_hist = st.text_input("Digite seu nome para visualizar o histórico")
+        if nome_hist:
             with Sessao() as sessao:
-                analises = sessao.query(Analise).filter_by(email=email_hist).order_by(Analise.data_hora.desc()).all()
+                analises = sessao.query(Analise).filter_by(nome=nome_hist).order_by(Analise.data_hora.desc()).all()
                 if not analises:
-                    st.info("Nenhuma análise encontrada para este e-mail.")
+                    st.info("Nenhuma análise encontrada para este nome.")
                 else:
                     for item in analises:
                         with st.expander(f"Análise em {item.data_hora.strftime('%d/%m/%Y')}"):
@@ -286,8 +272,7 @@ def main():
                             if st.button(f"📄 Baixar PDF #{item.id}", key=f"btn_{item.id}"):
                                 caminho_pdf = gerar_pdf_com_layout_oficial(item.resultado_ia)
                                 with open(caminho_pdf, "rb") as f:
-                                    st.download_button("📎 Baixar PDF", f, file_name=f"analise_{item.id}.pdf")
-
+                                    st.download_button("📌 Baixar PDF", f, file_name=f"analise_{item.id}.pdf")
 
 if __name__ == "__main__":
     main()
