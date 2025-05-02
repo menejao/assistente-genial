@@ -29,7 +29,6 @@ def configurar_pagina():
     st.set_page_config(
         page_title="Assistente Genial",
         layout="wide",
-        page_icon="🧠",
         initial_sidebar_state="expanded"
     )
     carregar_estilos()
@@ -52,11 +51,21 @@ class Analise(Base):
 # CONFIGURAÇÕES
 # =============================================
 def configurar_banco_dados():
-    if os.path.exists("analises.db"):
-        os.remove("analises.db")
     engine = create_engine('sqlite:///analises.db')
-    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
+    inspector = inspect(engine)
+
+    if 'analises' not in inspector.get_table_names():
+        Base.metadata.create_all(engine)
+    else:
+        colunas = [col['name'] for col in inspector.get_columns('analises')]
+        if 'nome' not in colunas:
+            with engine.connect() as conn:
+                conn.execute(text('ALTER TABLE analises ADD COLUMN nome TEXT'))
+        if 'metricas' not in colunas:
+            with engine.connect() as conn:
+                conn.execute(text('ALTER TABLE analises ADD COLUMN metricas TEXT'))
+
     return engine, Session
 
 def configurar_ia():
@@ -86,27 +95,27 @@ Você é um engenheiro experiente analisando documentos técnicos com profundida
 ## 2. AVALIAÇÃO POR CRITÉRIOS
 
 ### Clareza (x/5)
-👌 Pontos fortes
+✅ Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Viabilidade (x/5)
-👌 Pontos fortes
+✅ Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Organização e Coerência (x/5)
-👌 Pontos fortes
+✅ Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Impacto Ambiental e Societal (x/5)
-👌 Pontos fortes
+✅ Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
 ### Riscos e Desafios (x/5)
-👌 Pontos fortes
+✅ Pontos fortes
 ✖️ Problemas
 💡 Sugestões
 
@@ -136,6 +145,7 @@ def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
         topMargin=72,
         bottomMargin=72
     )
+
     styles = getSampleStyleSheet()
 
     title_style = ParagraphStyle(
@@ -189,22 +199,17 @@ def mostrar_analise(resultado):
     with cols[1]: st.metric("Viabilidade", "3.8/5", "-0.2")
     with cols[2]: st.metric("Organização", "4.5/5", "+1.1")
     with cols[3]: st.metric("Riscos", "2.9/5", "-0.5")
-    
-    st.markdown(
-        f"<div class='resultado'>{resultado['analise_completa']}</div>",
-        unsafe_allow_html=True
-    )
-
+    st.markdown(f"<div class='resultado'>{resultado['analise_completa']}</div>", unsafe_allow_html=True)
 
 def main():
     configurar_pagina()
     engine, Sessao = configurar_banco_dados()
     ia = configurar_ia()
 
-    st.title("🧠 Assistente Genial")
+    st.markdown("<h1 style='text-align: left;'>Assistente Genial</h1>", unsafe_allow_html=True)
     st.markdown("Obtenha análises técnicas detalhadas de documentos com apoio de IA.")
 
-    abas = st.tabs(["📄 Nova Análise", "📜 Histórico"])
+    abas = st.tabs(["Nova Análise", "Histórico"])
     aba_analise, aba_historico = abas
 
     with aba_analise:
@@ -215,14 +220,14 @@ def main():
             with col1:
                 arquivo = st.file_uploader("Envie um documento (.docx)", type=["docx"])
             with col2:
-                nome = st.text_input("Seu nome para salvar no histórico", placeholder="Ex: João Silva")
+                nome_usuario = st.text_input("Seu nome para histórico", placeholder="Ex: João Silva")
 
             texto = st.text_area("Ou cole o conteúdo diretamente:", height=250)
 
-            executar = st.form_submit_button("Executar Análise", type="primary")
+            executar = st.form_submit_button("Executar Análise")
 
         if executar:
-            if not (arquivo or texto.strip()) or not nome.strip():
+            if not (arquivo or texto.strip()) or not nome_usuario.strip():
                 st.error("Por favor, preencha todos os campos obrigatórios.")
             else:
                 with st.spinner("Executando análise..."):
@@ -231,8 +236,8 @@ def main():
                             doc = Document(arquivo)
                             texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
 
-                        prompt_template = criar_prompt_analise()
-                        prompt_str = prompt_template.format(escopo=texto)
+                        prompt = criar_prompt_analise()
+                        prompt_str = prompt.format(escopo=texto)
                         conteudo_final = ia.invoke(prompt_str)
 
                         resultado = {
@@ -242,7 +247,7 @@ def main():
 
                         with Sessao() as sessao:
                             sessao.add(Analise(
-                                nome=nome,
+                                nome=nome_usuario,
                                 texto_original=texto,
                                 resultado_ia=resultado['analise_completa'],
                                 metricas=json.dumps(resultado['metricas'])
@@ -253,7 +258,7 @@ def main():
 
                         pdf_path = gerar_pdf_com_layout_oficial(resultado['analise_completa'])
                         with open(pdf_path, "rb") as f:
-                            st.download_button("📅 Baixar PDF", f, file_name="analise_tecnica.pdf")
+                            st.download_button("Baixar PDF", f, file_name="analise_tecnica.pdf")
 
                     except Exception as e:
                         st.error(f"Erro na análise: {str(e)}")
@@ -268,11 +273,11 @@ def main():
                 else:
                     for item in analises:
                         with st.expander(f"Análise em {item.data_hora.strftime('%d/%m/%Y')}"):
-                            st.markdown(item.resultado_ia)
-                            if st.button(f"📄 Baixar PDF #{item.id}", key=f"btn_{item.id}"):
+                            st.markdown(item.resultado_ia, unsafe_allow_html=True)
+                            if st.button(f"Baixar PDF #{item.id}", key=f"btn_{item.id}"):
                                 caminho_pdf = gerar_pdf_com_layout_oficial(item.resultado_ia)
                                 with open(caminho_pdf, "rb") as f:
-                                    st.download_button("📌 Baixar PDF", f, file_name=f"analise_{item.id}.pdf")
+                                    st.download_button("Baixar PDF", f, file_name=f"analise_{item.id}.pdf")
 
 if __name__ == "__main__":
     main()
