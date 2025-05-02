@@ -77,10 +77,6 @@ def configurar_ia():
         temperature=0.3,
         model_name="mistralai/mistral-7b-instruct",
         openai_api_key=os.getenv("OPENROUTER_API_KEY"),
-        if api_key is None:
-    print("Chave API não encontrada!")
-else:
-    print(f"Chave API carregada: {api_key}")
         openai_api_base="https://openrouter.ai/api/v1",
         extra_headers={
             "HTTP-Referer": "https://seusite.com",
