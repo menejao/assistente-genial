@@ -235,9 +235,9 @@ def main():
             texto = st.text_area("Ou cole o conteúdo diretamente:", height=250)
             email = st.text_input("E-mail para salvar no histórico", placeholder="exemplo@email.com")
 
-            st.form_submit_button("📊 Executar Análise", type="primary")
+            executar = st.form_submit_button("Executar Análise", type="primary")
 
-        if st.session_state.get("formulario_analise"):
+        if executar:
             if not (arquivo or texto.strip()) or not email.strip():
                 st.error("Por favor, preencha todos os campos obrigatórios.")
             else:
