@@ -6,3 +6,4 @@ openai
 fpdf
 python-docx
 sqlalchemy
+streamlit>=1.32.0
