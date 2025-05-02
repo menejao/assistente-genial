@@ -72,16 +72,14 @@ def configurar_banco_dados():
 
 
 def configurar_ia():
+    def configurar_ia():
     load_dotenv()
-    return ChatOpenAI(
-        temperature=0.3,
-        model_name="mistralai/mistral-7b-instruct",
-        openai_api_key=os.getenv("OPENROUTER_API_KEY"),
-        openai_api_base="https://openrouter.ai/api/v1",
-        extra_headers={
-            "HTTP-Referer": "https://seusite.com",
-            "X-Title": "Assistente Genial",
-        }
+    from langchain.llms import HuggingFaceHub
+
+    return HuggingFaceHub(
+        repo_id="mistralai/Mistral-7B-Instruct-v0.1",  # ou outro modelo compatível
+        model_kwargs={"temperature": 0.3},
+        huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_KEY")
     )
 
 
