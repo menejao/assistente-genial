@@ -74,15 +74,16 @@ def configurar_banco_dados():
 
 def configurar_ia():
     load_dotenv()
-    chave = os.getenv("OPENAI_API_KEY")
+    chave = os.getenv("OPENROUTER_API_KEY")
     if not chave:
-        st.error("A chave da API da OpenAI não foi encontrada. Por favor, defina OPENAI_API_KEY no arquivo .env.")
+        st.error("A chave da API do OpenRouter não foi encontrada. Por favor, defina OPENROUTER_API_KEY no arquivo .env.")
         st.stop()
     return ChatOpenAI(
-        model_name="gpt-4-vision-preview",
+        model_name="openai/gpt-4-vision-preview",
         temperature=0.3,
         max_tokens=2048,
-        openai_api_key=chave
+        openai_api_key=chave,
+        base_url="https://openrouter.ai/api/v1"
     )
 
 # =============================================
