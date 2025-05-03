@@ -13,9 +13,10 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+import PyPDF2
 
 # =============================================
-# FOLHA DE ESTILO (CSS EXTERNO)
+# CSS
 # =============================================
 def carregar_estilos():
     with open("style.css", "r", encoding="utf-8") as f:
@@ -34,10 +35,9 @@ def configurar_pagina():
     carregar_estilos()
 
 # =============================================
-# MODELO DE BANCO DE DADOS
+# BANCO DE DADOS
 # =============================================
 Base = declarative_base()
-
 class Analise(Base):
     __tablename__ = 'analises'
     id = Column(Integer, primary_key=True)
@@ -47,14 +47,10 @@ class Analise(Base):
     metricas = Column(Text)
     data_hora = Column(DateTime, default=datetime.now)
 
-# =============================================
-# CONFIGURAÇÕES
-# =============================================
 def configurar_banco_dados():
     engine = create_engine('sqlite:///analises.db')
     Session = sessionmaker(bind=engine)
     inspector = inspect(engine)
-
     if 'analises' not in inspector.get_table_names():
         Base.metadata.create_all(engine)
     else:
@@ -62,151 +58,96 @@ def configurar_banco_dados():
         if 'nome' not in colunas:
             with engine.connect() as conn:
                 conn.execute(text('ALTER TABLE analises ADD COLUMN nome TEXT'))
-        if 'metricas' not in colunas:
-            with engine.connect() as conn:
-                conn.execute(text('ALTER TABLE analises ADD COLUMN metricas TEXT'))
-
     return engine, Session
 
+# =============================================
+# IA
+# =============================================
 def configurar_ia():
     load_dotenv()
     return ChatOpenAI(
-        model_name="mistralai/mistral-7b-instruct",
+        model_name="gpt-4",
         temperature=0.3,
-        max_tokens=1024,
-        openai_api_base="https://openrouter.ai/api/v1",
-        openai_api_key=os.getenv("OPENROUTER_API_KEY")
+        max_tokens=2048,
+        openai_api_key=os.getenv("OPENAI_API_KEY")
     )
 
-# =============================================
-# PROMPT DE ANÁLISE
-# =============================================
-def criar_prompt_analise():
-    return ChatPromptTemplate.from_template("""
-Você é um engenheiro experiente analisando documentos técnicos com profundidade. Forneça um relatório detalhado com os seguintes pontos:
+def detectar_tipo_documento(texto):
+    prompt_tipo = ChatPromptTemplate.from_template("""
+Classifique o seguinte texto como um dos seguintes tipos: TCC, currículo, relatório financeiro, escopo de projeto de design. Responda apenas com o tipo.
+Texto:
+{texto}
+""")
+    ia = configurar_ia()
+    return ia.predict(prompt_tipo.format(texto=texto)).strip().lower()
 
-# ANÁLISE TÉCNICA DETALHADA
-
-## 1. CONTEXTUALIZAÇÃO
-- Visão Geral do Escopo
-- Objetivos-chave
-- Partes Interessadas
-
-## 2. AVALIAÇÃO POR CRITÉRIOS
-
-### Clareza (x/5)
-✅ Pontos fortes
-✖️ Problemas
-💡 Sugestões
-
-### Viabilidade (x/5)
-✅ Pontos fortes
-✖️ Problemas
-💡 Sugestões
-
-### Organização e Coerência (x/5)
-✅ Pontos fortes
-✖️ Problemas
-💡 Sugestões
-
-### Impacto Ambiental e Societal (x/5)
-✅ Pontos fortes
-✖️ Problemas
-💡 Sugestões
-
-### Riscos e Desafios (x/5)
-✅ Pontos fortes
-✖️ Problemas
-💡 Sugestões
-
-## 3. RECOMENDAÇÕES
-
-1. Ação Urgente
-2. Segunda Prioridade
-3. Terceira Recomendação
-
-## 4. CONCLUSÃO FINAL
-- Resumo Geral
-- Impacto Geral
-- Próximos Passos
-
+def criar_prompt_analise(tipo):
+    if "tcc" in tipo:
+        return ChatPromptTemplate.from_template("""
+Você é um avaliador acadêmico. Analise o seguinte TCC quanto à linguagem técnica, estrutura, possíveis plágios, e forneça sugestões como um professor avaliador.
+Texto: {escopo}
+""")
+    elif "curr" in tipo:
+        return ChatPromptTemplate.from_template("""
+Você é um especialista em RH. Avalie o seguinte currículo quanto à clareza, estrutura, impacto e apresente sugestões de melhorias.
+Texto: {escopo}
+""")
+    elif "financeiro" in tipo:
+        return ChatPromptTemplate.from_template("""
+Você é um especialista financeiro. Avalie tecnicamente o seguinte relatório ou balanço, verificando coerência de dados, estrutura e erros comuns.
+Texto: {escopo}
+""")
+    elif "design" in tipo:
+        return ChatPromptTemplate.from_template("""
+Você é um UX designer sênior. Analise este escopo de projeto de design com foco em clareza, organização de telas, navegação e fluxo. Sugira melhorias técnicas para ser enviado a desenvolvedores.
+Texto: {escopo}
+""")
+    else:
+        return ChatPromptTemplate.from_template("""
+Analise tecnicamente o seguinte documento quanto a clareza, estrutura, linguagem técnica e possíveis erros.
 Texto: {escopo}
 """)
 
 # =============================================
-# GERAÇÃO DE PDF COM FORMATO OFICIAL
+# PDF
 # =============================================
 def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
-    doc = SimpleDocTemplate(
-        "relatorio_oficial.pdf",
-        pagesize=letter,
-        rightMargin=72,
-        leftMargin=72,
-        topMargin=72,
-        bottomMargin=72
-    )
-
+    doc = SimpleDocTemplate("relatorio_oficial.pdf", pagesize=letter)
     styles = getSampleStyleSheet()
-
-    title_style = ParagraphStyle(
-        'Title',
-        fontName='Times-Roman',
-        fontSize=16,
-        textColor=colors.HexColor("#003366"),
-        alignment=1,
-        spaceAfter=20,
-        leading=24
-    )
-
-    body_style = ParagraphStyle(
-        'BodyText',
-        fontName='Times-Roman',
-        fontSize=12,
-        leading=14,
-        alignment=4,
-        spaceAfter=12
-    )
-
-    footer_style = ParagraphStyle(
-        'Footer',
-        fontName='Times-Roman',
-        fontSize=10,
-        alignment=2,
-        spaceBefore=12,
-        spaceAfter=12,
-    )
-
+    title_style = ParagraphStyle('Title', fontName='Times-Roman', fontSize=16, textColor=colors.HexColor("#003366"), alignment=1, spaceAfter=20, leading=24)
+    body_style = ParagraphStyle('BodyText', fontName='Times-Roman', fontSize=12, leading=14, alignment=4, spaceAfter=12)
     content = [Paragraph(titulo, title_style), Spacer(1, 12)]
-
     for par in texto.split('\n'):
         if par.strip():
             content.append(Paragraph(par.strip(), body_style))
             content.append(Spacer(1, 12))
-
-    content.append(Spacer(1, 18))
-    content.append(Paragraph("Página", footer_style))
-
     doc.build(content)
     return "relatorio_oficial.pdf"
 
 # =============================================
-# INTERFACE DO USUÁRIO
+# INTERFACE
 # =============================================
 def mostrar_analise(resultado):
     st.subheader("Resultado da Análise")
-    cols = st.columns(4)
-    with cols[0]: st.metric("Clareza", "4.2/5", "+0.8")
-    with cols[1]: st.metric("Viabilidade", "3.8/5", "-0.2")
-    with cols[2]: st.metric("Organização", "4.5/5", "+1.1")
-    with cols[3]: st.metric("Riscos", "2.9/5", "-0.5")
-    st.markdown(f"<div class='resultado'>{resultado['analise_completa']}</div>", unsafe_allow_html=True)
+    st.markdown(f"""
+<div class='resultado'>
+{resultado['analise_completa']}
+</div>
+""", unsafe_allow_html=True)
+
+def extrair_texto_pdf(uploaded_file):
+    pdf_reader = PyPDF2.PdfReader(uploaded_file)
+    texto = ""
+    for page in pdf_reader.pages:
+        texto += page.extract_text() + "\n"
+    return texto
 
 def main():
     configurar_pagina()
     engine, Sessao = configurar_banco_dados()
     ia = configurar_ia()
 
-    st.markdown("<h1 style='text-align: left;'>Assistente Genial</h1>", unsafe_allow_html=True)
+    st.title("Assistente Genial")
     st.markdown("Obtenha análises técnicas detalhadas de documentos com apoio de IA.")
 
     abas = st.tabs(["Nova Análise", "Histórico"])
@@ -214,57 +155,63 @@ def main():
 
     with aba_analise:
         with st.form("formulario_analise"):
-            st.markdown("### Preencha os campos abaixo para gerar sua análise técnica")
+            st.markdown("### Envie seu documento para análise")
 
             col1, col2 = st.columns(2)
             with col1:
-                arquivo = st.file_uploader("Envie um documento (.docx)", type=["docx"])
+                arquivo = st.file_uploader("Arquivo (.docx ou .pdf)", type=["docx", "pdf"])
             with col2:
-                nome_usuario = st.text_input("Seu nome para histórico", placeholder="Ex: João Silva")
+                nome = st.text_input("Seu nome para salvar no histórico")
 
-            texto = st.text_area("Ou cole o conteúdo diretamente:", height=250)
-
+            texto = st.text_area("Ou cole o texto diretamente:", height=250)
             executar = st.form_submit_button("Executar Análise")
 
         if executar:
-            if not (arquivo or texto.strip()) or not nome_usuario.strip():
+            if not (arquivo or texto.strip()) or not nome.strip():
                 st.error("Por favor, preencha todos os campos obrigatórios.")
             else:
                 with st.spinner("Executando análise..."):
                     try:
                         if arquivo:
-                            doc = Document(arquivo)
-                            texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+                            if arquivo.name.endswith(".docx"):
+                                doc = Document(arquivo)
+                                texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+                            elif arquivo.name.endswith(".pdf"):
+                                texto = extrair_texto_pdf(arquivo)
 
-                        prompt = criar_prompt_analise()
-                        prompt_str = prompt.format(escopo=texto)
-                        conteudo_final = ia.invoke(prompt_str)
+                        tipo = detectar_tipo_documento(texto)
+                        prompt = criar_prompt_analise(tipo).format(escopo=texto)
+                        conteudo_final = ia.predict(prompt)
 
                         resultado = {
-                            'analise_completa': conteudo_final.content,
-                            'metricas': {'clareza': 4.2, 'viabilidade': 3.8}
+                            'analise_completa': conteudo_final,
+                            'metricas': {
+                                'clareza': 4.2,
+                                'linguagem': 4.5,
+                                'estrutura': 4.1,
+                                'originalidade': 4.0
+                            }
                         }
 
                         with Sessao() as sessao:
                             sessao.add(Analise(
-                                nome=nome_usuario,
+                                nome=nome,
                                 texto_original=texto,
-                                resultado_ia=resultado['analise_completa'],
+                                resultado_ia=conteudo_final,
                                 metricas=json.dumps(resultado['metricas'])
                             ))
                             sessao.commit()
 
                         mostrar_analise(resultado)
-
-                        pdf_path = gerar_pdf_com_layout_oficial(resultado['analise_completa'])
+                        pdf_path = gerar_pdf_com_layout_oficial(conteudo_final)
                         with open(pdf_path, "rb") as f:
-                            st.download_button("Baixar PDF", f, file_name="analise_tecnica.pdf")
+                            st.download_button("Baixar PDF", f, file_name="analise_documento.pdf")
 
                     except Exception as e:
                         st.error(f"Erro na análise: {str(e)}")
 
     with aba_historico:
-        nome_hist = st.text_input("Digite seu nome para visualizar o histórico")
+        nome_hist = st.text_input("Digite seu nome para ver o histórico")
         if nome_hist:
             with Sessao() as sessao:
                 analises = sessao.query(Analise).filter_by(nome=nome_hist).order_by(Analise.data_hora.desc()).all()
@@ -272,12 +219,12 @@ def main():
                     st.info("Nenhuma análise encontrada para este nome.")
                 else:
                     for item in analises:
-                        with st.expander(f"Análise em {item.data_hora.strftime('%d/%m/%Y')}"):
-                            st.markdown(item.resultado_ia, unsafe_allow_html=True)
+                        with st.expander(f"Análise em {item.data_hora.strftime('%d/%m/%Y %H:%M')}"):
+                            st.markdown(item.resultado_ia)
                             if st.button(f"Baixar PDF #{item.id}", key=f"btn_{item.id}"):
                                 caminho_pdf = gerar_pdf_com_layout_oficial(item.resultado_ia)
                                 with open(caminho_pdf, "rb") as f:
-                                    st.download_button("Baixar PDF", f, file_name=f"analise_{item.id}.pdf")
+                                    st.download_button("Download PDF", f, file_name=f"analise_{item.id}.pdf")
 
 if __name__ == "__main__":
     main()
