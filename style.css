@@ -13,7 +13,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-
+import pdfplumber
 
 # =============================================
 # FOLHA DE ESTILO (CSS EXTERNO)
@@ -22,7 +22,6 @@ def carregar_estilos():
     with open("style.css", "r", encoding="utf-8") as f:
         css = f.read()
         st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
-
 
 # =============================================
 # CONFIGURAÇÃO INICIAL
@@ -34,7 +33,6 @@ def configurar_pagina():
         initial_sidebar_state="expanded"
     )
     carregar_estilos()
-
 
 # =============================================
 # MODELO DE BANCO DE DADOS
@@ -49,7 +47,6 @@ class Analise(Base):
     resultado_ia = Column(Text)
     metricas = Column(Text)
     data_hora = Column(DateTime, default=datetime.now)
-
 
 # =============================================
 # CONFIGURAÇÕES
@@ -69,7 +66,6 @@ def configurar_banco_dados():
 
     return engine, Session
 
-
 def configurar_ia():
     load_dotenv()
     return ChatOpenAI(
@@ -78,7 +74,6 @@ def configurar_ia():
         max_tokens=2048,
         openai_api_key=os.getenv("OPENAI_API_KEY")
     )
-
 
 # =============================================
 # PROMPT DE ANÁLISE
@@ -130,11 +125,10 @@ Em ambos os casos, forneça:
 - Correções obrigatórias (se houver)
 
 ### 4. CONCLUSÃO
-- Avaliação geral e consideracoes finais
+- Avaliação geral e considerações finais
 
 Texto: {escopo}
 """)
-
 
 # =============================================
 # GERAÇÃO DE PDF COM FORMATO OFICIAL
@@ -180,7 +174,6 @@ def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
     doc.build(content)
     return "relatorio_oficial.pdf"
 
-
 # =============================================
 # INTERFACE DO USUÁRIO
 # =============================================
@@ -192,6 +185,10 @@ def mostrar_analise(resultado):
 </div>
 """, unsafe_allow_html=True)
 
+def extrair_texto_pdf(arquivo_pdf):
+    with pdfplumber.open(arquivo_pdf) as pdf:
+        texto = "\n".join(page.extract_text() or "" for page in pdf.pages)
+    return texto.strip()
 
 def main():
     configurar_pagina()
@@ -210,7 +207,7 @@ def main():
 
             col1, col2 = st.columns(2)
             with col1:
-                arquivo = st.file_uploader("Arquivo (.docx)", type=["docx"])
+                arquivo = st.file_uploader("Arquivo (.docx ou .pdf)", type=["docx", "pdf"])
             with col2:
                 nome = st.text_input("Seu nome para salvar no histórico")
 
@@ -224,8 +221,11 @@ def main():
                 with st.spinner("Executando análise..."):
                     try:
                         if arquivo:
-                            doc = Document(arquivo)
-                            texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+                            if arquivo.name.endswith(".docx"):
+                                doc = Document(arquivo)
+                                texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+                            elif arquivo.name.endswith(".pdf"):
+                                texto = extrair_texto_pdf(arquivo)
 
                         prompt = criar_prompt_analise().format(escopo=texto)
                         conteudo_final = ia.predict(prompt)
@@ -273,7 +273,6 @@ def main():
                                 caminho_pdf = gerar_pdf_com_layout_oficial(item.resultado_ia)
                                 with open(caminho_pdf, "rb") as f:
                                     st.download_button("Download PDF", f, file_name=f"analise_{item.id}.pdf")
-
 
 if __name__ == "__main__":
     main()
