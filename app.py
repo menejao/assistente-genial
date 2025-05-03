@@ -13,10 +13,10 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-import PyPDF2
+import pdfplumber
 
 # =============================================
-# CSS
+# FOLHA DE ESTILO (CSS EXTERNO)
 # =============================================
 def carregar_estilos():
     with open("style.css", "r", encoding="utf-8") as f:
@@ -35,9 +35,10 @@ def configurar_pagina():
     carregar_estilos()
 
 # =============================================
-# BANCO DE DADOS
+# MODELO DE BANCO DE DADOS
 # =============================================
 Base = declarative_base()
+
 class Analise(Base):
     __tablename__ = 'analises'
     id = Column(Integer, primary_key=True)
@@ -47,10 +48,14 @@ class Analise(Base):
     metricas = Column(Text)
     data_hora = Column(DateTime, default=datetime.now)
 
+# =============================================
+# CONFIGURAÇÕES
+# =============================================
 def configurar_banco_dados():
     engine = create_engine('sqlite:///analises.db')
     Session = sessionmaker(bind=engine)
     inspector = inspect(engine)
+
     if 'analises' not in inspector.get_table_names():
         Base.metadata.create_all(engine)
     else:
@@ -58,11 +63,10 @@ def configurar_banco_dados():
         if 'nome' not in colunas:
             with engine.connect() as conn:
                 conn.execute(text('ALTER TABLE analises ADD COLUMN nome TEXT'))
+
     return engine, Session
 
-# =============================================
-# IA
-# =============================================
+
 def configurar_ia():
     load_dotenv()
     return ChatOpenAI(
@@ -72,50 +76,83 @@ def configurar_ia():
         openai_api_key=os.getenv("OPENAI_API_KEY")
     )
 
+# =============================================
+# DETECÇÃO DO TIPO DE DOCUMENTO
+# =============================================
 def detectar_tipo_documento(texto):
-    prompt_tipo = ChatPromptTemplate.from_template("""
-Classifique o seguinte texto como um dos seguintes tipos: TCC, currículo, relatório financeiro, escopo de projeto de design. Responda apenas com o tipo.
-Texto:
-{texto}
-""")
-    ia = configurar_ia()
-    return ia.predict(prompt_tipo.format(texto=texto)).strip().lower()
+    if any(palavra in texto.lower() for palavra in ["resumo", "referencial teórico", "metodologia", "conclusão"]):
+        return "TCC"
+    elif any(palavra in texto.lower() for palavra in ["experiência profissional", "objetivo profissional", "formação acadêmica"]):
+        return "currículo"
+    elif any(palavra in texto.lower() for palavra in ["ativo", "passivo", "demonstrativo", "balanço patrimonial", "fluxo de caixa"]):
+        return "financeiro"
+    elif any(palavra in texto.lower() for palavra in ["tela", "fluxo de navegação", "wireframe", "layout", "ux", "ui"]):
+        return "design"
+    else:
+        return "geral"
 
+# =============================================
+# PROMPT DE ANÁLISE
+# =============================================
 def criar_prompt_analise(tipo):
-    if "tcc" in tipo:
+    if tipo == "TCC":
         return ChatPromptTemplate.from_template("""
-Você é um avaliador acadêmico. Analise o seguinte TCC quanto à linguagem técnica, estrutura, possíveis plágios, e forneça sugestões como um professor avaliador.
+Você é um especialista em avaliação de TCCs. Realize uma análise como um professor avaliaria:
+- Avalie linguagem técnica.
+- Julgue estrutura acadêmica.
+- Detecte possíveis traços de plágio.
+
+## ANÁLISE DETALHADA...
 Texto: {escopo}
 """)
-    elif "curr" in tipo:
+    elif tipo == "currículo":
         return ChatPromptTemplate.from_template("""
-Você é um especialista em RH. Avalie o seguinte currículo quanto à clareza, estrutura, impacto e apresente sugestões de melhorias.
+Você é um especialista em RH. Avalie este currículo:
+- Clareza, organização, impacto.
+- Pontos fortes e fracos.
+- Sugestões profissionais.
+
+## ANÁLISE DETALHADA...
 Texto: {escopo}
 """)
-    elif "financeiro" in tipo:
+    elif tipo == "financeiro":
         return ChatPromptTemplate.from_template("""
-Você é um especialista financeiro. Avalie tecnicamente o seguinte relatório ou balanço, verificando coerência de dados, estrutura e erros comuns.
+Você é um analista financeiro. Avalie tecnicamente este relatório:
+- Correção de balanços.
+- Inconsistências contábeis.
+- Sugestões e riscos percebidos.
+
+## ANÁLISE DETALHADA...
 Texto: {escopo}
 """)
-    elif "design" in tipo:
+    elif tipo == "design":
         return ChatPromptTemplate.from_template("""
-Você é um UX designer sênior. Analise este escopo de projeto de design com foco em clareza, organização de telas, navegação e fluxo. Sugira melhorias técnicas para ser enviado a desenvolvedores.
+Você é um analista UX/UI. Avalie este escopo de projeto de design:
+- Clareza, consistência e lógica dos fluxos de tela.
+- Sugira melhorias técnicas para desenvolvedores.
+
+## ANÁLISE DETALHADA...
 Texto: {escopo}
 """)
     else:
         return ChatPromptTemplate.from_template("""
-Analise tecnicamente o seguinte documento quanto a clareza, estrutura, linguagem técnica e possíveis erros.
+Você é um especialista em avaliação de documentos. Analise o conteúdo abaixo com criticidade, clareza e sugestões.
+
+## ANÁLISE DETALHADA...
 Texto: {escopo}
 """)
 
 # =============================================
-# PDF
+# GERAÇÃO DE PDF
 # =============================================
 def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
-    doc = SimpleDocTemplate("relatorio_oficial.pdf", pagesize=letter)
+    doc = SimpleDocTemplate("relatorio_oficial.pdf", pagesize=letter,
+                            rightMargin=72, leftMargin=72, topMargin=72, bottomMargin=72)
     styles = getSampleStyleSheet()
-    title_style = ParagraphStyle('Title', fontName='Times-Roman', fontSize=16, textColor=colors.HexColor("#003366"), alignment=1, spaceAfter=20, leading=24)
-    body_style = ParagraphStyle('BodyText', fontName='Times-Roman', fontSize=12, leading=14, alignment=4, spaceAfter=12)
+    title_style = ParagraphStyle('Title', fontName='Times-Roman', fontSize=16,
+                                 textColor=colors.HexColor("#003366"), alignment=1, spaceAfter=20, leading=24)
+    body_style = ParagraphStyle('BodyText', fontName='Times-Roman', fontSize=12,
+                                leading=14, alignment=4, spaceAfter=12)
     content = [Paragraph(titulo, title_style), Spacer(1, 12)]
     for par in texto.split('\n'):
         if par.strip():
@@ -135,20 +172,30 @@ def mostrar_analise(resultado):
 </div>
 """, unsafe_allow_html=True)
 
-def extrair_texto_pdf(uploaded_file):
-    pdf_reader = PyPDF2.PdfReader(uploaded_file)
-    texto = ""
-    for page in pdf_reader.pages:
-        texto += page.extract_text() + "\n"
-    return texto
+# =============================================
+# EXTRAÇÃO DE TEXTO
+# =============================================
+def extrair_texto(arquivo):
+    nome = arquivo.name.lower()
+    if nome.endswith(".docx"):
+        doc = Document(arquivo)
+        return "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+    elif nome.endswith(".pdf"):
+        with pdfplumber.open(arquivo) as pdf:
+            return "\n".join(page.extract_text() or '' for page in pdf.pages)
+    else:
+        return ""
 
+# =============================================
+# MAIN
+# =============================================
 def main():
     configurar_pagina()
     engine, Sessao = configurar_banco_dados()
     ia = configurar_ia()
 
     st.title("Assistente Genial")
-    st.markdown("Obtenha análises técnicas detalhadas de documentos com apoio de IA.")
+    st.markdown("Obtenha análises técnicas detalhadas de documentos variados com apoio de IA.")
 
     abas = st.tabs(["Nova Análise", "Histórico"])
     aba_analise, aba_historico = abas
@@ -156,14 +203,12 @@ def main():
     with aba_analise:
         with st.form("formulario_analise"):
             st.markdown("### Envie seu documento para análise")
-
             col1, col2 = st.columns(2)
             with col1:
                 arquivo = st.file_uploader("Arquivo (.docx ou .pdf)", type=["docx", "pdf"])
             with col2:
                 nome = st.text_input("Seu nome para salvar no histórico")
-
-            texto = st.text_area("Ou cole o texto diretamente:", height=250)
+            texto = st.text_area("Ou cole o texto do documento:", height=250)
             executar = st.form_submit_button("Executar Análise")
 
         if executar:
@@ -173,11 +218,7 @@ def main():
                 with st.spinner("Executando análise..."):
                     try:
                         if arquivo:
-                            if arquivo.name.endswith(".docx"):
-                                doc = Document(arquivo)
-                                texto = "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
-                            elif arquivo.name.endswith(".pdf"):
-                                texto = extrair_texto_pdf(arquivo)
+                            texto = extrair_texto(arquivo)
 
                         tipo = detectar_tipo_documento(texto)
                         prompt = criar_prompt_analise(tipo).format(escopo=texto)
@@ -203,6 +244,7 @@ def main():
                             sessao.commit()
 
                         mostrar_analise(resultado)
+
                         pdf_path = gerar_pdf_com_layout_oficial(conteudo_final)
                         with open(pdf_path, "rb") as f:
                             st.download_button("Baixar PDF", f, file_name="analise_documento.pdf")
