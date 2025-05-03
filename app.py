@@ -18,6 +18,7 @@ import pdfplumber
 import tempfile
 from PIL import Image
 import io
+import base64
 
 # =============================================
 # FOLHA DE ESTILO (CSS EXTERNO)
@@ -104,7 +105,7 @@ def detectar_tipo_documento(texto):
 # =============================================
 def criar_prompt_analise(tipo):
     if tipo == "design":
-        return "Você é um analista UX/UI. Avalie esta interface de projeto de design com base na imagem apresentada: identifique fluxos de tela, elementos principais, funcionalidades implícitas e sugira melhorias técnicas para desenvolvedores."
+        return "Você é um analista UX/UI. Avalie esta interface de projeto de design apresentada na imagem a seguir. Aponte fluxos de tela, elementos principais, funcionalidades implícitas e sugira melhorias técnicas para desenvolvedores."
     elif tipo == "TCC":
         return ChatPromptTemplate.from_template("""
 Você é um especialista em avaliação de TCCs. Realize uma análise como um professor avaliaria:
@@ -234,10 +235,14 @@ def main():
                                 imagem = Image.open(io.BytesIO(conteudo))
                                 tipo = "design"
                                 prompt_texto = criar_prompt_analise(tipo)
-                                conteudo_final = ia.invoke([HumanMessage(content=[
-                                    {"type": "text", "text": prompt_texto},
-                                    {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + base64.b64encode(conteudo).decode()}}
-                                ])).content
+                                extensao = nome_arquivo.split('.')[-1]
+                                mime = f"image/{'jpeg' if extensao in ['jpg', 'jpeg'] else 'png'}"
+                                conteudo_final = ia.invoke([
+                                    HumanMessage(content=[
+                                        {"type": "text", "text": prompt_texto},
+                                        {"type": "image_url", "image_url": {"url": f"data:{mime};base64," + base64.b64encode(conteudo).decode()}}
+                                    ])
+                                ]).content
                                 texto = "Imagem analisada. Resultado abaixo."
                             else:
                                 texto = extrair_texto(arquivo, nome_arquivo)
