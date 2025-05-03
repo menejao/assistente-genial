@@ -9,6 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
+from langchain.schema import HumanMessage
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -103,14 +104,7 @@ def detectar_tipo_documento(texto):
 # =============================================
 def criar_prompt_analise(tipo):
     if tipo == "design":
-        return ChatPromptTemplate.from_template("""
-Você é um analista UX/UI. Avalie este escopo de projeto de design com base na imagem apresentada:
-- Identifique fluxos de tela, elementos principais e funcionalidades implícitas.
-- Sugira melhorias técnicas e coerência para desenvolvedores.
-
-## ANÁLISE DETALHADA DA TELA DO PROJETO UX/UI
-Imagem: {escopo}
-""")
+        return "Você é um analista UX/UI. Avalie esta interface de projeto de design com base na imagem apresentada: identifique fluxos de tela, elementos principais, funcionalidades implícitas e sugira melhorias técnicas para desenvolvedores."
     elif tipo == "TCC":
         return ChatPromptTemplate.from_template("""
 Você é um especialista em avaliação de TCCs. Realize uma análise como um professor avaliaria:
@@ -236,12 +230,14 @@ def main():
                             conteudo = arquivo.read()
                             arquivo.seek(0)
 
-                            if nome_arquivo.endswith(('.png', '.jpg', '.jpeg')):
+                            if nome_arquivo.endswith((".png", ".jpg", ".jpeg")):
                                 imagem = Image.open(io.BytesIO(conteudo))
                                 tipo = "design"
-                                prompt_template = criar_prompt_analise(tipo)
-                                prompt = prompt_template.format(escopo="[imagem de interface UX/UI enviada]")
-                                conteudo_final = ia.predict(prompt.to_messages())
+                                prompt_texto = criar_prompt_analise(tipo)
+                                conteudo_final = ia.invoke([HumanMessage(content=[
+                                    {"type": "text", "text": prompt_texto},
+                                    {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + base64.b64encode(conteudo).decode()}}
+                                ])).content
                                 texto = "Imagem analisada. Resultado abaixo."
                             else:
                                 texto = extrair_texto(arquivo, nome_arquivo)
