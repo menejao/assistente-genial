@@ -14,6 +14,9 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 import pdfplumber
+import tempfile
+from PIL import Image
+import io
 
 # =============================================
 # FOLHA DE ESTILO (CSS EXTERNO)
@@ -69,11 +72,15 @@ def configurar_banco_dados():
 
 def configurar_ia():
     load_dotenv()
+    chave = os.getenv("OPENAI_API_KEY")
+    if not chave:
+        st.error("A chave da API da OpenAI não foi encontrada. Por favor, defina OPENAI_API_KEY no arquivo .env.")
+        st.stop()
     return ChatOpenAI(
-        model_name="gpt-4",
+        model_name="gpt-4-vision-preview",
         temperature=0.3,
         max_tokens=2048,
-        openai_api_key=os.getenv("OPENAI_API_KEY")
+        openai_api_key=chave
     )
 
 # =============================================
@@ -95,7 +102,16 @@ def detectar_tipo_documento(texto):
 # PROMPT DE ANÁLISE
 # =============================================
 def criar_prompt_analise(tipo):
-    if tipo == "TCC":
+    if tipo == "design":
+        return ChatPromptTemplate.from_template("""
+Você é um analista UX/UI. Avalie este escopo de projeto de design com base na imagem apresentada:
+- Identifique fluxos de tela, elementos principais e funcionalidades implícitas.
+- Sugira melhorias técnicas e coerência para desenvolvedores.
+
+## ANÁLISE DETALHADA DA TELA DO PROJETO UX/UI
+Imagem: {escopo}
+""")
+    elif tipo == "TCC":
         return ChatPromptTemplate.from_template("""
 Você é um especialista em avaliação de TCCs. Realize uma análise como um professor avaliaria:
 - Avalie linguagem técnica.
@@ -125,15 +141,6 @@ Você é um analista financeiro. Avalie tecnicamente este relatório:
 ## ANÁLISE DETALHADA...
 Texto: {escopo}
 """)
-    elif tipo == "design":
-        return ChatPromptTemplate.from_template("""
-Você é um analista UX/UI. Avalie este escopo de projeto de design:
-- Clareza, consistência e lógica dos fluxos de tela.
-- Sugira melhorias técnicas para desenvolvedores.
-
-## ANÁLISE DETALHADA...
-Texto: {escopo}
-""")
     else:
         return ChatPromptTemplate.from_template("""
 Você é um especialista em avaliação de documentos. Analise o conteúdo abaixo com criticidade, clareza e sugestões.
@@ -146,7 +153,10 @@ Texto: {escopo}
 # GERAÇÃO DE PDF
 # =============================================
 def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
-    doc = SimpleDocTemplate("relatorio_oficial.pdf", pagesize=letter,
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf", dir="/tmp") as temp_pdf:
+        caminho_pdf = temp_pdf.name
+
+    doc = SimpleDocTemplate(caminho_pdf, pagesize=letter,
                             rightMargin=72, leftMargin=72, topMargin=72, bottomMargin=72)
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle('Title', fontName='Times-Roman', fontSize=16,
@@ -159,7 +169,7 @@ def gerar_pdf_com_layout_oficial(texto, titulo="Relatório Oficial"):
             content.append(Paragraph(par.strip(), body_style))
             content.append(Spacer(1, 12))
     doc.build(content)
-    return "relatorio_oficial.pdf"
+    return caminho_pdf
 
 # =============================================
 # INTERFACE
@@ -175,8 +185,8 @@ def mostrar_analise(resultado):
 # =============================================
 # EXTRAÇÃO DE TEXTO
 # =============================================
-def extrair_texto(arquivo):
-    nome = arquivo.name.lower()
+def extrair_texto(arquivo, nome_arquivo):
+    nome = nome_arquivo.lower()
     if nome.endswith(".docx"):
         doc = Document(arquivo)
         return "\n".join([p.text for p in doc.paragraphs if p.text.strip()])
@@ -201,13 +211,17 @@ def main():
     aba_analise, aba_historico = abas
 
     with aba_analise:
+        st.markdown("### Envie seu documento ou imagem para análise")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            arquivo = st.file_uploader("Arquivo (.docx, .pdf ou imagem .png/.jpg)", type=["docx", "pdf", "png", "jpg", "jpeg"])
+        with col2:
+            nome = st.text_input("Seu nome para salvar no histórico", max_chars=30)
+            st.caption(f"{len(nome)}/30 caracteres")
+
         with st.form("formulario_analise"):
-            st.markdown("### Envie seu documento para análise")
-            col1, col2 = st.columns(2)
-            with col1:
-                arquivo = st.file_uploader("Arquivo (.docx ou .pdf)", type=["docx", "pdf"])
-            with col2:
-                nome = st.text_input("Seu nome para salvar no histórico")
+            st.info("Aceita documentos e também imagens de projetos UX/UI.")
             texto = st.text_area("Ou cole o texto do documento:", height=250)
             executar = st.form_submit_button("Executar Análise")
 
@@ -218,11 +232,29 @@ def main():
                 with st.spinner("Executando análise..."):
                     try:
                         if arquivo:
-                            texto = extrair_texto(arquivo)
+                            nome_arquivo = arquivo.name.lower()
+                            conteudo = arquivo.read()
+                            arquivo.seek(0)
 
-                        tipo = detectar_tipo_documento(texto)
-                        prompt = criar_prompt_analise(tipo).format(escopo=texto)
-                        conteudo_final = ia.predict(prompt)
+                            if nome_arquivo.endswith(('.png', '.jpg', '.jpeg')):
+                                imagem = Image.open(io.BytesIO(conteudo))
+                                tipo = "design"
+                                prompt_template = criar_prompt_analise(tipo)
+                                prompt = prompt_template.format(escopo="[imagem de interface UX/UI enviada]")
+                                conteudo_final = ia.predict(prompt.to_messages())
+                                texto = "Imagem analisada. Resultado abaixo."
+                            else:
+                                texto = extrair_texto(arquivo, nome_arquivo)
+                                tipo = detectar_tipo_documento(texto)
+                                prompt_template = criar_prompt_analise(tipo)
+                                prompt = prompt_template.format(escopo=texto)
+                                conteudo_final = ia.predict(prompt.to_messages())
+
+                        elif texto:
+                            tipo = detectar_tipo_documento(texto)
+                            prompt_template = criar_prompt_analise(tipo)
+                            prompt = prompt_template.format(escopo=texto)
+                            conteudo_final = ia.predict(prompt.to_messages())
 
                         resultado = {
                             'analise_completa': conteudo_final,
@@ -253,20 +285,31 @@ def main():
                         st.error(f"Erro na análise: {str(e)}")
 
     with aba_historico:
-        nome_hist = st.text_input("Digite seu nome para ver o histórico")
+        nome_hist = st.text_input("Digite seu nome para ver o histórico", max_chars=30)
+        tipo_filtro = st.selectbox("Filtrar por tipo de documento", ["Todos", "TCC", "currículo", "financeiro", "design", "geral"])
+        st.caption(f"{len(nome_hist)}/30 caracteres")
+
         if nome_hist:
             with Sessao() as sessao:
                 analises = sessao.query(Analise).filter_by(nome=nome_hist).order_by(Analise.data_hora.desc()).all()
+                if tipo_filtro != "Todos":
+                    analises = [a for a in analises if detectar_tipo_documento(a.texto_original) == tipo_filtro]
+
                 if not analises:
-                    st.info("Nenhuma análise encontrada para este nome.")
+                    st.info("Nenhuma análise encontrada para este nome e filtro.")
                 else:
                     for item in analises:
                         with st.expander(f"Análise em {item.data_hora.strftime('%d/%m/%Y %H:%M')}"):
                             st.markdown(item.resultado_ia)
-                            if st.button(f"Baixar PDF #{item.id}", key=f"btn_{item.id}"):
-                                caminho_pdf = gerar_pdf_com_layout_oficial(item.resultado_ia)
-                                with open(caminho_pdf, "rb") as f:
-                                    st.download_button("Download PDF", f, file_name=f"analise_{item.id}.pdf")
+                            caminho_pdf = gerar_pdf_com_layout_oficial(item.resultado_ia, titulo="Relatório de Análise")
+                            with open(caminho_pdf, "rb") as f:
+                                st.download_button(
+                                    label="Download PDF",
+                                    data=f,
+                                    file_name=f"analise_{item.id}.pdf",
+                                    mime="application/pdf",
+                                    key=f"download_{item.id}"
+                                )
 
 if __name__ == "__main__":
     main()
