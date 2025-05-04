@@ -79,7 +79,7 @@ def configurar_ia():
         st.error("A chave da API do OpenRouter não foi encontrada. Por favor, defina OPENROUTER_API_KEY no arquivo .env.")
         st.stop()
     return ChatOpenAI(
-        model_name="openai/gpt-4-vision-preview",
+        model_name="mistralai/mistral-7b-instruct",
         temperature=0.3,
         max_tokens=2048,
         openai_api_key=chave,
@@ -237,7 +237,7 @@ def main():
                                 tipo = "design"
                                 prompt_texto = criar_prompt_analise(tipo)
                                 extensao = nome_arquivo.split('.')[-1]
-                                mime = f"image/{'jpeg' if extensao in ['jpg', 'jpeg'] else 'png'}"
+                                mime = f"image/{{'jpeg' if extensao in ['jpg', 'jpeg'] else 'png'}}"
                                 conteudo_final = ia.invoke([
                                     HumanMessage(content=[
                                         {"type": "text", "text": prompt_texto},
