@@ -2,13 +2,16 @@
 body {
   background-color: #f5f5f5;
   font-family: 'Segoe UI', sans-serif;
+  color: #2c3e50;
+  margin: 0;
 }
 
 /* === Cabeçalho === */
 h1 {
   color: #2c3e50;
   text-align: left;
-  padding: 1rem;
+  padding: 1rem 0;
+  font-size: 2rem;
 }
 
 /* === Container do App === */
@@ -16,6 +19,9 @@ h1 {
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* === Caixa de texto === */
@@ -26,25 +32,18 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 8px;
   resize: vertical;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fafafa;
+  transition: border-color 0.2s ease-in-out;
 }
 
-/* === Botão de Enviar (kind="primary") === */
-button[kind="primary"] {
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+textarea:focus {
+  border-color: #2c3e50;
+  outline: none;
 }
 
-button[kind="primary"]:hover {
-  background-color: #1a252f;
-}
-
-/* === Botão de Submissão de Formulário (kind="secondaryFormSubmit") === */
+/* === Botões === */
+button[kind="primary"],
 button[kind="secondaryFormSubmit"] {
   background-color: #2c3e50;
   color: white;
@@ -52,22 +51,25 @@ button[kind="secondaryFormSubmit"] {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
+button[kind="primary"]:hover,
 button[kind="secondaryFormSubmit"]:hover {
   background-color: #1a252f;
+  transform: translateY(-1px);
 }
 
-/* Previne alterações de estilo no texto interno ao passar o mouse */
+/* Previne alterações no texto interno */
 button[kind="secondaryFormSubmit"] p,
 button[kind="secondaryFormSubmit"]:hover p {
   color: white;
   transition: none;
 }
 
-/* === Botão kind="secondary" com estilo branco e borda acinzentada === */
+/* === Botão Secundário === */
 button[kind="secondary"] {
   background-color: #ffffff;
   color: #000000;
@@ -75,19 +77,18 @@ button[kind="secondary"] {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: none;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
-/* Remove hover completamente */
-button[kind="secondary"]:hover,
+button[kind="secondary"]:hover {
+  box-shadow: 0 0 0 2px #cccccc44;
+}
+
+/* Remove hover no texto */
 button[kind="secondary"]:hover p {
-  background-color: #ffffff !important;
   color: #000000 !important;
-  border: 1px solid #cccccc !important;
-  box-shadow: none !important;
-  text-decoration: none !important;
-  filter: none !important;
 }
 
 /* === Tabs === */
@@ -100,15 +101,11 @@ button[data-baseweb="tab"] {
   border-radius: 8px 8px 0 0;
   font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 /* Aba Ativa */
 button[data-baseweb="tab"][aria-selected="true"] {
-  background-color: #2c3e50 !important;
-  color: white !important;
-}
-
-button[data-baseweb="tab"][aria-selected="true"]:hover {
   background-color: #2c3e50 !important;
   color: white !important;
 }
@@ -124,9 +121,9 @@ button[data-baseweb="tab"][aria-selected="false"]:hover {
   color: #000;
 }
 
-/* === Destaque da aba ativa com tom ameno === */
+/* Destaque da aba ativa */
 div[data-baseweb="tab-highlight"] {
-  background-color: #a3b1c6 !important; /* Azul acinzentado suave */
+  background-color: #a3b1c6 !important;
   height: 3px;
   border-radius: 2px;
 }
@@ -139,12 +136,19 @@ div[data-baseweb="tab-highlight"] {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 1.5rem;
   white-space: pre-wrap;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 /* === Responsividade === */
 @media (max-width: 768px) {
   .main {
     padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
   }
 
   button[data-baseweb="tab"] {
