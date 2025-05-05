@@ -79,16 +79,27 @@ button[kind="secondary"] {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: none; /* Sem transições */
+  box-shadow: none;
 }
 
-button[kind="secondary"]:hover {
-  box-shadow: 0 0 0 2px #cccccc44;
-}
-
-/* Remove hover no texto */
-button[kind="secondary"]:hover p {
+/* === Botão Browse Files (alterado para Enviar arquivo) === */
+.st-emotion-cache-13lcgu3.eacrzsi2 {
+  background-color: #ffffff !important;
   color: #000000 !important;
+  border: 1px solid #cccccc !important; /* Levemente acinzentado */
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  cursor: pointer !important; /* Cursor pointer */
+  transition: none !important; /* Sem efeitos de transição */
+}
+
+/* Remover efeitos de hover */
+.st-emotion-cache-13lcgu3.eacrzsi2:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #cccccc !important;
+  box-shadow: none !important;
 }
 
 /* === Tabs === */
@@ -161,25 +172,33 @@ div[data-baseweb="select"] {
   background-color: #fafafa;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 0.25rem 0.75rem;
   font-family: 'Segoe UI', sans-serif;
   font-size: 1rem;
   color: #2c3e50;
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adiciona espaçamento entre texto e ícone de seleção */
+  cursor: pointer;
 }
 
-div[data-baseweb="select"]:hover {
-  border-color: #888;
-}
-
-div[data-baseweb="select"]:focus-within {
-  border-color: #2c3e50;
-  box-shadow: 0 0 0 2px #2c3e5066;
-}
-
-/* Estilo da opção selecionada */
 div[data-baseweb="select"] > div {
-  padding: 0.5rem 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo do texto selecionado */
+div[data-baseweb="select"] > div > span {
+  color: #2c3e50; /* Cor do texto do tipo de documento selecionado */
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+/* Ícone de seta para o menu dropdown */
+div[data-baseweb="select"] > div > svg {
+  fill: #2c3e50; /* Cor da seta */
 }
 
 /* Estilo do menu dropdown */
@@ -188,6 +207,8 @@ div[role="listbox"] {
   border-radius: 8px !important;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
   background-color: #ffffff !important;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 /* Estilo de cada opção no menu */
@@ -196,6 +217,7 @@ div[role="option"] {
   padding: 0.5rem 1rem;
   color: #2c3e50;
   font-family: 'Segoe UI', sans-serif;
+  cursor: pointer;
 }
 
 /* Hover em opção */
@@ -206,5 +228,5 @@ div[role="option"]:hover {
 /* Opção ativa (selecionada) */
 div[role="option"][aria-selected="true"] {
   background-color: #2c3e50 !important;
-  color: white !important;
+  color: #2c3e50 !important;
 }
