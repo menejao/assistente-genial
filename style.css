@@ -155,3 +155,56 @@ div[data-baseweb="tab-highlight"] {
     font-size: 0.9rem;
   }
 }
+
+/* === Selectbox personalizado (tipo de documento) === */
+div[data-baseweb="select"] {
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.25rem 0.75rem;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  color: #2c3e50;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+div[data-baseweb="select"]:hover {
+  border-color: #888;
+}
+
+div[data-baseweb="select"]:focus-within {
+  border-color: #2c3e50;
+  box-shadow: 0 0 0 2px #2c3e5066;
+}
+
+/* Estilo da opção selecionada */
+div[data-baseweb="select"] > div {
+  padding: 0.5rem 0;
+}
+
+/* Estilo do menu dropdown */
+div[role="listbox"] {
+  border: 1px solid #ccc !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+  background-color: #ffffff !important;
+}
+
+/* Estilo de cada opção no menu */
+div[role="option"] {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  color: #2c3e50;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Hover em opção */
+div[role="option"]:hover {
+  background-color: #f0f0f0;
+}
+
+/* Opção ativa (selecionada) */
+div[role="option"][aria-selected="true"] {
+  background-color: #2c3e50 !important;
+  color: white !important;
+}
